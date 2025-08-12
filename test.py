@@ -26,7 +26,7 @@ while True:
     if not success:
         break
 
-    hands, img = detector.findHands(img)
+    hands = detector.findHands(img, draw = False)
 
     if hands:
         hand = hands[0]
@@ -56,9 +56,12 @@ while True:
         red_bg[y_offset:y_offset+new_h, x_offset:x_offset+new_w] = imgResize
 
         prediction, index = classifier.getPrediction(red_bg)
-        print(prediction,index)
+        print(prediction, index)
+
+        cv2.putText(img, prediction, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 2,(0, 255, 0),3)                        
 
         cv2.imshow("imgCrop", red_bg)
+
 
     cv2.imshow("Image", img)
     key = cv2.waitKey(1) & 0xFF
